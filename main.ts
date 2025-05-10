@@ -9,7 +9,9 @@ Deno.serve((request: Request) => {
 
             const proxyUrl = new URL(url.origin);
             proxyUrl.searchParams.set("proxy-host", targetUrl.hostname);
-            proxyUrl.searchParams.set("proxy-protocol", targetUrl.protocol);
+            if (targetUrl.protocol !== "https:") {
+                proxyUrl.searchParams.set("proxy-protocol", targetUrl.protocol);
+            }
 
             if (targetUrl.port) {
                 proxyUrl.searchParams.set("proxy-port", targetUrl.port);
